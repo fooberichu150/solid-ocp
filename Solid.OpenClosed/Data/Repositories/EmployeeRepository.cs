@@ -11,12 +11,13 @@ namespace Solid.OpenClosed.Data.Repositories
 	public interface IEmployeeRepository
 	{
 		Task<Models.Employee> GetAsync(int employeeId);
+		Task<IEnumerable<Models.Employee>> GetAsync(Models.Requests.EmployeeFilter filter);
 		Task<Models.Employee> SaveAsync(Models.Employee employee);
 	}
 
 	public class EmployeeRepository : IEmployeeRepository
 	{
-		public EmployeeRepository(IEmployeeDbContext context, 
+		public EmployeeRepository(IEmployeeDbContext context,
 			IEmployeeAdapter employeeAdapter)
 		{
 			Context = context;
@@ -33,6 +34,18 @@ namespace Solid.OpenClosed.Data.Repositories
 				.SingleOrDefault();
 
 			return EmployeeAdapter.ToModel(employee);
+		}
+
+		public async Task<IEnumerable<Models.Employee>> GetAsync(Models.Requests.EmployeeFilter filter)
+		{
+			var employees = Context.Employees
+			   .ById(filter.EmployeeId)
+			   .ByIsActive(filter.IsActive)
+			   .AsEnumerable();
+
+			return employees
+				.Select(employee => EmployeeAdapter.ToModel(employee))
+				.ToArray();
 		}
 
 		public async Task<Models.Employee> SaveAsync(Models.Employee employee)

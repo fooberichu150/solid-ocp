@@ -10,7 +10,7 @@ namespace Solid.OpenClosed.Controllers
 	[Route("[controller]")]
 	//[Route("api/[controller]")]
 	public class EmployeeController : Controller
-    {
+	{
 		public EmployeeController(IGetEmployeeHandler getEmployeeHandler)
 		{
 			EmployeeHandler = getEmployeeHandler;
@@ -27,6 +27,14 @@ namespace Solid.OpenClosed.Controllers
 				return NotFound(id);
 
 			return Ok(employee);
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> Get([FromQuery] Models.Requests.EmployeeFilter filter)
+		{
+			var employees = await EmployeeHandler.GetAsync(filter);
+
+			return Ok(employees);
 		}
 	}
 }

@@ -11,6 +11,7 @@ namespace Solid.OpenClosed.Handlers
 	public interface IGetEmployeeHandler
 	{
 		Task<Employee> GetAsync(int employeeId);
+		Task<Employee[]> GetAsync(EmployeeFilter filter);
 	}
 
 	public class GetEmployeeHandler : IGetEmployeeHandler
@@ -22,9 +23,19 @@ namespace Solid.OpenClosed.Handlers
 
 		protected IEmployeeRepository EmployeeRepository { get; }
 
-		public Task<Employee> GetAsync(int employeeId)
+		public async Task<Employee> GetAsync(int employeeId)
 		{
-			return EmployeeRepository.GetAsync(employeeId);
+			var employee = await GetAsync(new EmployeeFilter { EmployeeId = employeeId });
+
+			return employee
+				.SingleOrDefault();
+		}
+
+		public async Task<Employee[]> GetAsync(EmployeeFilter filter)
+		{
+			var employees = await EmployeeRepository.GetAsync(filter);
+
+			return employees.ToArray();
 		}
 	}
 }
