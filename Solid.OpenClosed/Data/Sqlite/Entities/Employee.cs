@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Solid.OpenClosed.Data.Entities
+namespace Solid.OpenClosed.Data.Sqlite.Entities
 {
     public partial class Employee
     {

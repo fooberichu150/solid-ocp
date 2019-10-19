@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Solid.OpenClosed.Data.Entities;
+using Solid.OpenClosed.Data.Sqlite.Entities;
 
-namespace Solid.OpenClosed.Data.Extensions
+namespace Solid.OpenClosed.Data.Sqlite.Extensions
 {
 	public static class EmployeeQueryExtensions
 	{

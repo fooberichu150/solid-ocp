@@ -27,12 +27,17 @@ namespace Solid.OpenClosed
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddDbContext<Data.IEmployeeDbContext, Data.EmployeeDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("EmployeeContext")));
 			services.AddControllers();
 
 			services.AddTransient<Handlers.IGetEmployeeHandler, Handlers.GetEmployeeHandler>();
-			services.AddTransient<Adapters.IEmployeeAdapter, Adapters.EmployeeAdapter>();
-			services.AddScoped<Data.Repositories.IEmployeeRepository, Data.Repositories.EmployeeRepository>();
+			services.AddTransient<Data.Sqlite.Adapters.IEmployeeAdapter, Data.Sqlite.Adapters.EmployeeAdapter>();
+
+			// next two lines configure the Sqlite repository
+			services.AddDbContext<Data.Sqlite.IEmployeeDbContext, Data.Sqlite.EmployeeDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("EmployeeContext")));
+			services.AddScoped<Data.Repositories.IEmployeeRepository, Data.Sqlite.EmployeeRepository>();
+
+			// following line to use the InMemoryRepository instead of Sqlite
+			//services.AddSingleton<Data.Repositories.IEmployeeRepository, Data.InMemory.InMemoryEmployeeRepository>();
 
 			services.AddAutoMapper(typeof(Startup));
 		}

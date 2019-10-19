@@ -3,18 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Solid.OpenClosed.Adapters;
-using Solid.OpenClosed.Data.Extensions;
+using Solid.OpenClosed.Data.Repositories;
+using Solid.OpenClosed.Data.Sqlite.Adapters;
+using Solid.OpenClosed.Data.Sqlite.Extensions;
 
-namespace Solid.OpenClosed.Data.Repositories
+namespace Solid.OpenClosed.Data.Sqlite
 {
-	public interface IEmployeeRepository
-	{
-		Task<Models.Employee> GetAsync(int employeeId);
-		Task<IEnumerable<Models.Employee>> GetAsync(Models.Requests.EmployeeFilter filter);
-		Task<Models.Employee> SaveAsync(Models.Employee employee);
-	}
-
 	public class EmployeeRepository : IEmployeeRepository
 	{
 		public EmployeeRepository(IEmployeeDbContext context,

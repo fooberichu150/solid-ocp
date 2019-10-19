@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Solid.OpenClosed.Data.Entities;
+using Solid.OpenClosed.Data.Sqlite.Entities;
 
-namespace Solid.OpenClosed.Data
+namespace Solid.OpenClosed.Data.Sqlite
 {
 	public interface IEmployeeDbContext
 	{
